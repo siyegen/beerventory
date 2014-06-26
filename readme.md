@@ -5,6 +5,11 @@ Get updates when certain beers are low!
 
 ## API  
 - GET /beer  
+```{"beers":[{"upc":"", "name":"", "desc":"", "type":"", "quantity":""}]}```
+
+- GET /beer/:upc
+
+```{"upc":"", "name":"", "desc":"", "type":"", "quantity":""}```
 
 - POST /beer
   - name
@@ -13,6 +18,8 @@ Get updates when certain beers are low!
   - quantity
   - upc
 
+```{"upc":"", "name":"", "desc":"", "type":"", "quantity":""}```
+
 - PUT /beer/:upc
   - name
   - desc
@@ -20,12 +27,18 @@ Get updates when certain beers are low!
   - quantity
   - upc
 
+```{"upc":"", "name":"", "desc":"", "type":"", "quantity":""}```
+
 - DELETE /beer/:upc
+
+```{"deleted":true}```
 
 - POST /checkout
   - upc
   - timestamp
   - loc
+
+```{"upc":"", "timestamp":"", "loc":""}```
 
 
 ## MYSQL
