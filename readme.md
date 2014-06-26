@@ -4,7 +4,25 @@ Input via admin panel
 Get updates when certain beers are low!
 
 ## API
+GET /beer
 
-POST /api/checkout
-JSON Body {"UPC": "SerialNumber", "TS": 12344567, "LOC": "Boulder"}
+- POST /beer
+- name
+- desc
+- type
+- quantity
+- upc
 
+PUT /beer/:upc
+- name
+- desc
+- type
+- quantity
+- upc
+
+DELETE /beer/:upc
+
+POST /checkout
+- upc
+- timestamp
+- loc
