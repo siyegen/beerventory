@@ -49,6 +49,16 @@ func main() {
 	m := martini.Classic()
 	m.Use(SetJsonContentType)
 
+	m.Get("/type", func() (int, string) {
+		res, err := db.Query("Select * from beer_types")
+		if err != nil {
+			log.Printf("Couldn't query for beer types")
+			return 500, "No beer types here"
+		}
+		statusCode, typesJson := QueryMakerZero(res)
+		return statusCode, string(typesJson)
+	})
+
 	m.Get("/beer", func() (int, string) {
 		res, err := db.Query("Select * from beer")
 		if err != nil {
