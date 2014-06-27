@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `beer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `beer` (
-  `upc` int(11) NOT NULL,
+  `upc` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `type` varchar(100) NOT NULL,
   `qty` int(11) DEFAULT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE `beer` (
 
 LOCK TABLES `beer` WRITE;
 /*!40000 ALTER TABLE `beer` DISABLE KEYS */;
-INSERT INTO `beer` VALUES (1000000001,'paps blue ribbon','pilsner',150),(1000000002,'Red Trolly','red ale',13),(1000000003,'Irish Red','red ale',13),(1000000004,'Union Jack','ipa',13);
+INSERT INTO `beer` VALUES ("1000000001",'paps blue ribbon','pilsner',150),("1000000002",'Red Trolly','red ale',13),("1000000003",'Irish Red','red ale',13),("1000000004",'Union Jack','ipa',13);
 /*!40000 ALTER TABLE `beer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -51,7 +51,7 @@ DROP TABLE IF EXISTS `events`;
 CREATE TABLE `events` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `upc` int(11) NOT NULL,
+  `upc` varchar(100) NOT NULL,
   `location_id` int(11) DEFAULT NULL,
   `type` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -64,7 +64,7 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
-INSERT INTO `events` VALUES (1,'2014-06-25 19:31:17',1000000004,1,'consumed'),(2,'2014-06-25 20:31:17',1000000004,1,'consumed'),(3,'2014-06-26 22:31:40',1000000001,1,'consumed'),(4,'2014-06-26 22:31:54',1000000002,1,'consumed'),(5,'2014-06-26 22:31:55',1000000002,1,'consumed'),(6,'2014-06-26 22:31:59',1000000003,1,'consumed');
+INSERT INTO `events` VALUES (1,'2014-06-25 19:31:17',"1000000004",1,'consumed'),(2,'2014-06-25 20:31:17',"1000000004",1,'consumed'),(3,'2014-06-26 22:31:40',"1000000001",1,'consumed'),(4,'2014-06-26 22:31:54',"1000000002",1,'consumed'),(5,'2014-06-26 22:31:55',"1000000002",1,'consumed'),(6,'2014-06-26 22:31:59',"1000000003",1,'consumed');
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
