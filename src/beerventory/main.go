@@ -45,9 +45,9 @@ func main() {
 
 	m.Get("/beer/:id", func(params martini.Params) (int, string) {
 		log.Print("beer beer", params["id"])
-		res, err := db.Query("Select * from beer where id = ? limit 1", params["id"])
+		res, err := db.Query("Select * from beer where upc = ? limit 1", params["id"])
 		if err != nil {
-			log.Printf("Couldn't query for beer")
+			log.Printf("Couldn't query for beer", err)
 			return 500, "No beer here"
 		}
 		statusCode, beersJson := QueryMakerZero(res)
