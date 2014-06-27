@@ -180,12 +180,14 @@ func main() {
 	})
 
 	m.Delete("/beer/:upc", func(params martini.Params) (int, string) {
-		_, err = db.Exec("delete from beer where upc=? limit 1", params["upc"])
+		res, err := db.Exec("delete from beer where upc=? limit 1", params["upc"])
+		log.Print("deleting beer", params["upc"])
 		if err != nil {
 			log.Print("Couldn't delete beer", err)
 			return 400, "go fish"
 		}
-		return 200, `{"deleted":true}`
+		deleted, _ := res.RowsAffected()
+		return 200, fmt.Sprintf(`{"deleted":%d}`, deleted)
 	})
 
 	m.Post("/checkout", func(req *http.Request) (int, string) {
