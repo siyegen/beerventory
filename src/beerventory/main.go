@@ -29,6 +29,12 @@ func (b *Beer) JSON() ([]byte, error) {
 	return json.Marshal(b)
 }
 
+type CheckoutEvent struct {
+	Upc       int
+	Timestamp int `json:"timestamp,omitempty"`
+	Location  int
+}
+
 func main() {
 	fmt.Println("Drink beer")
 	host := "localhost"
@@ -68,14 +74,14 @@ func main() {
 		body, err := ioutil.ReadAll(req.Body)
 		if err != nil {
 			log.Print("Couldn't read post body", err)
-			return 400, "fish"
+			return 400, "go fish"
 		}
 		log.Print("Post beer")
 		var beer Beer
 		err = json.Unmarshal(body, &beer)
 		if err != nil {
 			log.Print("Couldn't unmarshal json", err)
-			return 400, "fish"
+			return 400, "go fish"
 		}
 
 		_, err = db.Exec(
@@ -84,7 +90,7 @@ func main() {
 		)
 		if err != nil {
 			log.Print("Couldn't save beer", err)
-			return 400, "fish"
+			return 400, "go fish"
 		}
 
 		beerJson, _ := beer.JSON()
@@ -96,14 +102,14 @@ func main() {
 		body, err := ioutil.ReadAll(req.Body)
 		if err != nil {
 			log.Print("Couldn't read post body", err)
-			return 400, "fish"
+			return 400, "go fish"
 		}
 		log.Print("Post beer")
 		var beer Beer
 		err = json.Unmarshal(body, &beer)
 		if err != nil {
 			log.Print("Couldn't unmarshal json", err)
-			return 400, "fish"
+			return 400, "go fish"
 		}
 
 		_, err = db.Exec(
@@ -112,7 +118,7 @@ func main() {
 		)
 		if err != nil {
 			log.Print("Couldn't save beer", err)
-			return 400, "fish"
+			return 400, "go fish"
 		}
 
 		beerJson, _ := beer.JSON()
@@ -123,13 +129,50 @@ func main() {
 		_, err = db.Exec("delete from beer where upc=? limit 1", params["upc"])
 		if err != nil {
 			log.Print("Couldn't delete beer", err)
-			return 400, "fish"
+			return 400, "go fish"
 		}
 		return 200, `{"deleted":true}`
 	})
 
-	m.Post("/checkout", func() string {
-		return "added beer"
+	m.Post("/checkout", func(req *http.Request) (int, string) {
+		body, err := ioutil.ReadAll(req.Body)
+		if err != nil {
+			log.Print("Couldn't read body", err)
+			return 400, "go fish"
+		}
+
+		var checkoutEvent CheckoutEvent
+		err = json.Unmarshal(body, &checkoutEvent)
+		if err != nil {
+			log.Print("Couldn't unmarshal json", err)
+			return 400, "go fish"
+		}
+
+		log.Print(checkoutEvent)
+		_, err = db.Exec(
+			"insert into events set upc=?, location_id=?, type='consumed'",
+			checkoutEvent.Upc, checkoutEvent.Location,
+		)
+		if err != nil {
+			log.Print("Can't save checkout", err)
+			return 400, "go fish"
+		}
+
+		_, err = db.Exec(
+			"update beer set qty=(qty-1) where upc=? limit 1",
+			checkoutEvent.Upc,
+		)
+		if err != nil {
+			log.Print("Can't update qty on checkout", err)
+			return 400, "go fish"
+		}
+
+		eventJson, err := json.Marshal(checkoutEvent)
+		if err != nil {
+			return 500, "Json marshalling error"
+		}
+
+		return 200, string(eventJson)
 	})
 
 	m.Run()
