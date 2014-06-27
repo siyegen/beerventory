@@ -42,13 +42,13 @@ INSERT INTO `beer` VALUES ("1000000001",'paps blue ribbon',1,150),("1000000002",
 UNLOCK TABLES;
 
 --
--- Table structure for table `events`
+-- Table structure for table `event`
 --
 
-DROP TABLE IF EXISTS `events`;
+DROP TABLE IF EXISTS `event`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `events` (
+CREATE TABLE `event` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `upc` varchar(100) NOT NULL,
@@ -59,23 +59,23 @@ CREATE TABLE `events` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `events`
+-- Dumping data for table `event`
 --
 
-LOCK TABLES `events` WRITE;
-/*!40000 ALTER TABLE `events` DISABLE KEYS */;
-INSERT INTO `events` VALUES (1,'2014-06-25 19:31:17',"1000000004",1,'consumed'),(2,'2014-06-25 20:31:17',"1000000004",1,'consumed'),(3,'2014-06-26 22:31:40',"1000000001",1,'consumed'),(4,'2014-06-26 22:31:54',"1000000002",1,'consumed'),(5,'2014-06-26 22:31:55',"1000000002",1,'consumed'),(6,'2014-06-26 22:31:59',"1000000003",1,'consumed');
-/*!40000 ALTER TABLE `events` ENABLE KEYS */;
+LOCK TABLES `event` WRITE;
+/*!40000 ALTER TABLE `event` DISABLE KEYS */;
+INSERT INTO `event` VALUES (1,'2014-06-25 19:31:17',"1000000004",1,'consumed'),(2,'2014-06-25 20:31:17',"1000000004",1,'consumed'),(3,'2014-06-26 22:31:40',"1000000001",1,'consumed'),(4,'2014-06-26 22:31:54',"1000000002",1,'consumed'),(5,'2014-06-26 22:31:55',"1000000002",1,'consumed'),(6,'2014-06-26 22:31:59',"1000000003",1,'consumed');
+/*!40000 ALTER TABLE `event` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `beer_types`
+-- Table structure for table `beer_type`
 --
 
-DROP TABLE IF EXISTS `beer_types`;
+DROP TABLE IF EXISTS `beer_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `beer_types` (
+CREATE TABLE `beer_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -83,13 +83,13 @@ CREATE TABLE `beer_types` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `beer_types`
+-- Dumping data for table `beer_type`
 --
 
-LOCK TABLES `beer_types` WRITE;
-/*!40000 ALTER TABLE `beer_types` DISABLE KEYS */;
-INSERT INTO `beer_types` VALUES (1,"Lager"),(2,"Pilsner"),(3,"Psudo Pilsner"),(4,"Red Ale"),(5,"IPA"),(6,"Double IPA");
-/*!40000 ALTER TABLE `beer_types` ENABLE KEYS */;
+LOCK TABLES `beer_type` WRITE;
+/*!40000 ALTER TABLE `beer_type` DISABLE KEYS */;
+INSERT INTO `beer_type` VALUES (1,"Lager"),(2,"Pilsner"),(3,"Psudo Pilsner"),(4,"Red Ale"),(5,"IPA"),(6,"Double IPA");
+/*!40000 ALTER TABLE `beer_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
