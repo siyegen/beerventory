@@ -35,6 +35,10 @@ type CheckoutEvent struct {
 	Location  int
 }
 
+type BeerType struct {
+	Type string
+}
+
 func main() {
 	fmt.Println("Drink beer")
 	host := "localhost"
@@ -57,6 +61,32 @@ func main() {
 		}
 		statusCode, typesJson := QueryMakerZero(res)
 		return statusCode, string(typesJson)
+	})
+
+	m.Post("/type", func(req *http.Request) (int, string) {
+		body, err := ioutil.ReadAll(req.Body)
+		if err != nil {
+			log.Print("Couldn't read post body", err)
+			return 400, "go fish"
+		}
+		log.Print("Post Type")
+		var beerType BeerType
+		err = json.Unmarshal(body, &beerType)
+		if err != nil {
+			log.Print("Couldn't unmarshal json", err)
+			return 400, "go fish"
+		}
+
+		res, err := db.Exec(
+			"insert into beer_types set type=?", beerType.Type,
+		)
+		if err != nil {
+			log.Print("Couldn't save beer", err)
+			return 400, "go fish"
+		}
+		lastId, _ := res.LastInsertId()
+
+		return 200, fmt.Sprintf(`{"type":%s, "id":%d}`, beerType.Type, lastId)
 	})
 
 	m.Get("/beer", func() (int, string) {
