@@ -108,8 +108,14 @@ func main() {
 			log.Printf("Couldn't query for beer")
 			return 500, "No beer here"
 		}
-		statusCode, beersJson := QueryMakerZero(res)
-		return statusCode, string(beersJson)
+
+		// statusCode, beersJson := QueryMakerZero(res)
+		beers := QueryMakerZero(res)
+		beersJson, err := json.Marshal(beers)
+		if err != nil {
+			return 500, "Json marshalling error"
+		}
+		return 200, string(beersJson)
 	})
 
 	m.Get("/beer/:id", func(params martini.Params) (int, string) {
@@ -119,8 +125,18 @@ func main() {
 			log.Printf("Couldn't query for beer", err)
 			return 500, "No beer here"
 		}
-		statusCode, beersJson := QueryMakerZero(res)
-		return statusCode, string(beersJson)
+
+		// statusCode, beersJson := QueryMakerZero(res)
+		beers := QueryMakerZero(res)
+		if len(beers) == 0 {
+			return 404, "no beer"
+		}
+
+		beerJson, err := json.Marshal(beers[0])
+		if err != nil {
+			return 500, "Json marshalling error"
+		}
+		return 200, string(beerJson)
 	})
 
 	m.Post("/beer", func(req *http.Request) (int, string) {
@@ -238,7 +254,7 @@ func SetJsonContentType(res http.ResponseWriter) {
 	res.Header().Add("Content-Type", "application/json")
 }
 
-func QueryMakerZero(res *sql.Rows) (int, string) {
+func QueryMakerZero(res *sql.Rows) []Beer {
 	beers := make([]Beer, 0)
 	for res.Next() {
 		var curBeer Beer
@@ -248,16 +264,5 @@ func QueryMakerZero(res *sql.Rows) (int, string) {
 		}
 		beers = append(beers, curBeer)
 	}
-
-	var beersJson []byte
-	var err error
-	if len(beers) == 1 {
-		beersJson, err = json.Marshal(beers[0])
-	} else {
-		beersJson, err = json.Marshal(beers)
-	}
-	if err != nil {
-		return 500, "Json marshalling error"
-	}
-	return 200, string(beersJson)
+	return beers
 }
