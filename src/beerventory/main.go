@@ -167,7 +167,7 @@ func main() {
 		beer.Upc = upc
 		log.Print("Post beer", beer)
 		_, err = db.Exec(
-			"update beer set type=?, name=?, qty=? where upc=?",
+			"update beer set type_id=?, name=?, qty=? where upc=?",
 			beer.Type, beer.Name, beer.Qty, upc,
 		)
 		if err != nil {
