@@ -164,7 +164,7 @@ func main() {
 			log.Print("Couldn't unmarshal json", err)
 			return 400, "go fish"
 		}
-
+		beer.Upc = upc
 		_, err = db.Exec(
 			"update beer set type=?, name=?, qty=? where upc=?",
 			beer.Type, beer.Name, beer.Qty, upc,
