@@ -54,7 +54,9 @@ func main() {
 		return statusCode, string(beersJson)
 	})
 
-	m.Post("/beer", func() string {
+	m.Post("/beer", func(req http.Request) string {
+		log.Print("Post beer", params)
+		err := db.Exec("", ...)
 		return "added beer"
 	})
 
