@@ -19,7 +19,7 @@ func (b *BeerList) JSON() ([]byte, error) {
 }
 
 type Beer struct {
-	Upc  int
+	Upc  string
 	Type string
 	Name string
 	Qty  int
@@ -30,7 +30,7 @@ func (b *Beer) JSON() ([]byte, error) {
 }
 
 type CheckoutEvent struct {
-	Upc       int
+	Upc       string
 	Timestamp int `json:"timestamp,omitempty"`
 	Location  int
 }
