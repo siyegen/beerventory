@@ -12,11 +12,11 @@ import (
 //     sendSms(os.Getenv("ANAHEIM"))
 // }
 
-func sendSms(to string) {
+func sendSms(to string, beer string) {
 
 	client := twiliogo.NewClient(os.Getenv("SID"), os.Getenv("AUTH_TOKEN"))
 
-	message := "Get me some beer, running out of it!"
+	message := fmt.Sprintf("We've ran out of %s!fdfadkjadh", beer)
 	_, err := twiliogo.NewMessage(client,
 		os.Getenv("FROM"),
 		to,

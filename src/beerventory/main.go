@@ -7,6 +7,8 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
+	"strings"
 
 	"github.com/go-martini/martini"
 	_ "github.com/go-sql-driver/mysql"
@@ -215,6 +217,7 @@ func main() {
 
 		var checkoutEvent CheckoutEvent
 		err = json.Unmarshal(body, &checkoutEvent)
+		checkoutEvent.Upc = strings.TrimSpace(checkoutEvent.Upc)
 		if err != nil {
 			log.Print("Couldn't unmarshal json", err)
 			return 400, "go fish"
@@ -239,6 +242,8 @@ func main() {
 			return 400, "go fish"
 		}
 
+		go Notify(db, checkoutEvent.Upc)
+
 		eventJson, err := json.Marshal(checkoutEvent)
 		if err != nil {
 			return 500, "Json marshalling error"
@@ -248,6 +253,29 @@ func main() {
 	})
 
 	m.Run()
+}
+
+func Notify(db *sql.DB, upc string) {
+	res, err := db.Query("select name, qty from beer where upc=? limit 1", upc)
+	if err != nil {
+		log.Print("error querying for quantity:", err)
+		return
+	}
+	for res.Next() {
+		var qty int
+		var beer string
+		err := res.Scan(&beer, &qty)
+		if err != nil {
+			log.Print("No scan on qty:", err)
+			return
+		}
+		if qty == 0 {
+			go sendSms(os.Getenv("ANAHEIM"), beer)
+		}
+		// else if qty < 3 {
+		// 	go sendSms(os.Getenv("ANAHEIM"), beer)
+		// }
+	}
 }
 
 func SetJsonContentType(res http.ResponseWriter) {
