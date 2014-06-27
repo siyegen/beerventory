@@ -19,10 +19,10 @@ func (b *BeerList) JSON() ([]byte, error) {
 }
 
 type Beer struct {
-	Upc  string
-	Type string
-	Name string
-	Qty  int
+	Upc  string `json:"upc"`
+	Type string `json:"type"`
+	Name string `json:"name"`
+	Qty  int    `json:"qty"`
 }
 
 func (b *Beer) JSON() ([]byte, error) {
@@ -30,14 +30,14 @@ func (b *Beer) JSON() ([]byte, error) {
 }
 
 type CheckoutEvent struct {
-	Upc       string
-	Timestamp int `json:"timestamp,omitempty"`
-	Location  int
+	Upc       string `json:"upc"`
+	Timestamp int    `json:"timestamp,omitempty"`
+	Location  int    `json:"location"`
 }
 
 type BeerType struct {
-	Type string
-	Id   int
+	Type string `json:"type"`
+	Id   int    `json:"id"`
 }
 
 func main() {
