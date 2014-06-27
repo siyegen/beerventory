@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `beer`;
 CREATE TABLE `beer` (
   `upc` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `type_id` varchar(100) NOT NULL,
+  `type_id` int(2) NOT NULL,
   `qty` int(11) DEFAULT NULL,
   PRIMARY KEY (`upc`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

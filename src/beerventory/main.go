@@ -20,7 +20,7 @@ func (b *BeerList) JSON() ([]byte, error) {
 
 type Beer struct {
 	Upc  string `json:"upc"`
-	Type string `json:"type"`
+	Type int    `json:"type"`
 	Name string `json:"name"`
 	Qty  int    `json:"qty"`
 }
