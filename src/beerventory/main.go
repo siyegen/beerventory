@@ -55,7 +55,7 @@ func main() {
 	m.Use(SetJsonContentType)
 
 	m.Get("/type", func() (int, string) {
-		res, err := db.Query("Select * from beer_types")
+		res, err := db.Query("Select * from beer_type")
 		if err != nil {
 			log.Printf("Couldn't query for beer types")
 			return 500, "No beer types here"
