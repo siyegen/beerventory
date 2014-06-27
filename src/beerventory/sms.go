@@ -16,7 +16,7 @@ func sendSms(to string, beer string) {
 
 	client := twiliogo.NewClient(os.Getenv("SID"), os.Getenv("AUTH_TOKEN"))
 
-	message := fmt.Sprintf("We've ran out of %s!fdfadkjadh", beer)
+	message := fmt.Sprintf(beer)
 	_, err := twiliogo.NewMessage(client,
 		os.Getenv("FROM"),
 		to,

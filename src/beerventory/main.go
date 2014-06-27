@@ -270,13 +270,15 @@ func Notify(db *sql.DB, upc string) {
 			return
 		}
 		if qty == 0 {
+            ran_out := fmt.Sprintf("We've run out of %s!", beer)
+
             // email
             addresses := make([]string, 2)
             addresses = append(addresses, "suchit@sendgrid.com", "richard.the@sendgrid.com")
-            go sendEmail(addresses, beer, "Beerventory Update")
+            go sendEmail(addresses, ran_out, "Beerventory Update")
 
             // sms
-			go sendSms(os.Getenv("ANAHEIM"), beer)
+			go sendSms(os.Getenv("ANAHEIM"), ran_out)
 		}
 		// else if qty < 3 {
 		// 	go sendSms(os.Getenv("ANAHEIM"), beer)
