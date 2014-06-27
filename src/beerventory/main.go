@@ -78,7 +78,7 @@ func main() {
 		}
 
 		res, err := db.Exec(
-			"insert into beer_types set type=?", beerType.Type,
+			"insert into beer_type set type=?", beerType.Type,
 		)
 		if err != nil {
 			log.Print("Couldn't save beer", err)
@@ -190,7 +190,7 @@ func main() {
 
 		log.Print(checkoutEvent)
 		_, err = db.Exec(
-			"insert into events set upc=?, location_id=?, type='consumed'",
+			"insert into event set upc=?, location_id=?, type='consumed'",
 			checkoutEvent.Upc, checkoutEvent.Location,
 		)
 		if err != nil {
