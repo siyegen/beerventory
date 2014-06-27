@@ -270,6 +270,12 @@ func Notify(db *sql.DB, upc string) {
 			return
 		}
 		if qty == 0 {
+            // email
+            addresses := make([]string, 2)
+            addresses = append(addresses, "suchit@sendgrid.com", "richard.the@sendgrid.com")
+            go sendEmail(addresses, beer, "Beerventory Update")
+
+            // sms
 			go sendSms(os.Getenv("ANAHEIM"), beer)
 		}
 		// else if qty < 3 {
