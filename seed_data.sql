@@ -88,8 +88,8 @@ CREATE TABLE `beer_types` (
 
 LOCK TABLES `beer_types` WRITE;
 /*!40000 ALTER TABLE `beer_types` DISABLE KEYS */;
-INSERT INTO `events` VALUES (1,"Lager"),(2,"Pilsner"),(3,"Psudo Pilsner"),(4,"Red Ale"),(5,"IPA"),(6,"Double IPA");
-/*!40000 ALTER TABLE `events` ENABLE KEYS */;
+INSERT INTO `beer_types` VALUES (1,"Lager"),(2,"Pilsner"),(3,"Psudo Pilsner"),(4,"Red Ale"),(5,"IPA"),(6,"Double IPA");
+/*!40000 ALTER TABLE `beer_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
