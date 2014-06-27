@@ -37,6 +37,7 @@ type CheckoutEvent struct {
 
 type BeerType struct {
 	Type string
+	Id   int
 }
 
 func main() {
@@ -59,8 +60,20 @@ func main() {
 			log.Printf("Couldn't query for beer types")
 			return 500, "No beer types here"
 		}
-		statusCode, typesJson := QueryMakerZero(res)
-		return statusCode, string(typesJson)
+		beerTypes := make([]BeerType, 0)
+		for res.Next() {
+			var curBeerType BeerType
+			err := res.Scan(&curBeerType.Id, &curBeerType.Type)
+			if err != nil {
+				log.Print("No scan", err)
+			}
+			beerTypes = append(beerTypes, curBeerType)
+		}
+		beerTypeData, err := json.Marshal(beerTypes)
+		if err != nil {
+			return 500, "bad json go fish"
+		}
+		return 200, string(beerTypeData)
 	})
 
 	m.Post("/type", func(req *http.Request) (int, string) {
