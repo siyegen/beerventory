@@ -88,7 +88,7 @@ CREATE TABLE `location` (
 
 LOCK TABLES `location` WRITE;
 /*!40000 ALTER TABLE `location` DISABLE KEYS */;
-INSERT INTO `location` VALUES (1,'Anahiem'),(2,'Boulder'),(3,'Denver');
+INSERT INTO `location` VALUES (1,'Anaheim'),(2,'Boulder'),(3,'Denver'),(4,'Providence'),(5,'San Francisco'),(6,'Romania');
 /*!40000 ALTER TABLE `location` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
