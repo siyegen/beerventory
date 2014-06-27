@@ -138,7 +138,7 @@ func main() {
 		}
 
 		_, err = db.Exec(
-			"insert into beer set upc=?, type=?, name=?, qty=?",
+			"insert into beer set upc=?, type_id=?, name=?, qty=?",
 			beer.Upc, beer.Type, beer.Name, beer.Qty,
 		)
 		if err != nil {
